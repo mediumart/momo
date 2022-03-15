@@ -1,0 +1,30 @@
+{
+    "name": "mediumart/momo",
+    "description": "MTN Mobile money implementation",
+    "type": "library",
+    "keywords": ["MTN", "Mobile money", "Payment"],
+    "authors": [
+        {
+            "name": "Isaac",
+            "email": "daprod2009@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">= 7.2",
+        "guzzlehttp/guzzle": "^7.4",
+        "ramsey/uuid": "^4.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mediumart\\Momo\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mediumart\\Momo\\Tests\\": "tests/"
+        }
+    }
+}

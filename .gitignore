@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+vendor/
+/*.php
+phpunit.xml
+clover.xml
+coveralls-upload.json
+.phpunit.result.cache
+phpunit.xml.bak
