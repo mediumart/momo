@@ -1,10 +1,10 @@
 <?php
-namespace Mediumart\Momo\Http;
+namespace Mediumart\Momo\Collection\Http;
 
 use Psr\Http\Message\ResponseInterface;
-use Mediumart\Momo\Contracts\CollectionClientContract;
+use Mediumart\Momo\BaseClient;
 
-class CollectionClient extends HttpClient implements CollectionClientContract
+class Client extends BaseClient implements ClientContract
 {
     /**
      * Create a token.
@@ -33,7 +33,7 @@ class CollectionClient extends HttpClient implements CollectionClientContract
     public function requestToPay(
         string $token,
         string $requestReferenceId,
-        array $payloadData, 
+        array $payload, 
         string $callbackUrl=null
     ):ResponseInterface
     {
@@ -50,7 +50,7 @@ class CollectionClient extends HttpClient implements CollectionClientContract
         return $this->client->request('POST', 
             $this->baseUrl.'/collection/v1_0/requesttopay',[
                 'headers' => $headers,
-                'body' => json_encode($payloadData)
+                'body' => json_encode($payload)
             ]
         );
     }

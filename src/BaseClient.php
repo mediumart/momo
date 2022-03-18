@@ -1,14 +1,14 @@
 <?php
-namespace Mediumart\Momo\Http;
+namespace Mediumart\Momo;
 
-abstract class HttpClient
+abstract class BaseClient
 {
     /**
      * base url path.
      * 
      * @var string
      */
-    protected $baseUrl = 'https://sandbox.momodeveloper.mtn.com';
+    protected $baseUrl;
 
     /**
      * Http Client.

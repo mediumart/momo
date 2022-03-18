@@ -1,9 +1,9 @@
 <?php
-namespace Mediumart\Momo\Contracts;
+namespace Mediumart\Momo\Collection\Http;;
 
 use Psr\Http\Message\ResponseInterface;
 
-interface CollectionClientContract
+interface ClientContract
 {
     /**
      * Create a token.
