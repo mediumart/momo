@@ -8,9 +8,9 @@ class Factory
     static protected $httpClient;
 
     /**
-     * @return Client
+     * @return ClientInterface
      */
-    static public function httpClient()
+    static public function httpClient():ClientInterface
     {
         if (! static::$httpClient) {
             static::$httpClient = new Client(new GuzzleHttpClient);

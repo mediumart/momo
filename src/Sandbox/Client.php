@@ -31,7 +31,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * Create a Momo Api user.
+     * Create a sandbox api user.
      * 
      * @param string $referenceId
      * @param string $subscriptionKey
@@ -49,7 +49,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * Create an Api key for the referenced user.
+     * Create an api key for the referenced user.
      * 
      * @param string $referenceId
      * @param string $subscriptionKey
@@ -67,7 +67,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * Get an Api user infos.
+     * Get an api user infos.
      * 
      * @param string $referenceId
      * @param string $subscriptionKey

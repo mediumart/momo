@@ -4,13 +4,6 @@ namespace Mediumart\Momo\Sandbox;
 class ApiUser
 {
     /**
-     * The product api name.
-     * 
-     * @var string
-     */
-    protected $api;
-
-    /**
      * Reference Id.
      * 
      * @var string
@@ -27,14 +20,12 @@ class ApiUser
     /**
      * Construct.
      * 
-     * @param string $api
      * @param string $id
      * @param string $apiKey
      */
-    public function __construct(string $id, string $api, string $apiKey)
+    public function __construct(string $id, string $apiKey)
     {
         $this->id = $id;
-        $this->api = $api;
         $this->apiKey = $apiKey;
     }
 

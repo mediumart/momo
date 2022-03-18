@@ -8,26 +8,19 @@ class UsersProvisioning
     /**
      * Create a new sandbox user for a given product api.
      *  
-     * @param string $api
+     * @param string $subscriptionKey
      * @return ApiUser
      */
-    static public function sandboxUserFor(string $api)
+    static public function sandboxUserFor(string $subscriptionKey):ApiUser
     {
-        $keys = require __DIR__.'/SubscriptionsKeys.php';
-
-        if (! array_key_exists($api, $keys) || empty($keys[$api])) {
-            return;
-        }
-
         Factory::httpClient()->createApiUser(
-            $referenceId = Uuid::uuid4(), 
-            $subscriptionKey = $keys[$api]['primary']
+            $referenceId = Uuid::uuid4(), $subscriptionKey 
         );
 
         $response = Factory::httpClient()
                         ->createApiKey($referenceId, $subscriptionKey)
                         ->getBody();
         
-        return new ApiUser($referenceId, $api, json_decode($response)->apiKey);
+        return new ApiUser($referenceId, json_decode($response)->apiKey);
     }
 }

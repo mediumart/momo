@@ -5,12 +5,12 @@ use Mediumart\Momo\Sandbox\UsersProvisioning;
 
 class LiveApiTest extends TestCase
 {
-    public function testUserProvisioningForSandboxUser():void
+    public function testUserProvisioningSandbox():void
     {
-        // $this->assertNull(UsersProvisioning::sandboxUserFor('disbursements'));
+        $this->assertNotNull(
+            $user = UsersProvisioning::sandboxUserFor('0ce2ea5d5c98474f94034146fe69d3be')
+        );
 
-        $this->assertNull(UsersProvisioning::sandboxUserFor('remittances'));
-
-        // $this->assertNotNull(UsersProvisioning::sandboxUserFor('collection'));
+        var_dump($user);
     } 
 }

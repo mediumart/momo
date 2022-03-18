@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 interface ClientInterface
 {
     /**
-     * Create a Momo Api user.
+     * Create a sandbox api user.
      * 
      * @param string $referenceId
      * @param string $subscriptionKey
@@ -15,7 +15,7 @@ interface ClientInterface
     public function createApiUser(string $referenceId, string $subscriptionKey):ResponseInterface;
 
     /**
-     * Create an Api key for the referenced user.
+     * Create an api key for the referenced user.
      * 
      * @param string $referenceId
      * @param string $subscriptionKey
@@ -24,7 +24,7 @@ interface ClientInterface
     public function createApiKey(string $referenceId, string $subscriptionKey):ResponseInterface;
     
     /**
-     * Get an Api user infos.
+     * Get an api user infos.
      * 
      * @param string $referenceId
      * @param string $subscriptionKey
