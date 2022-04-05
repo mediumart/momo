@@ -1,14 +1,18 @@
 <?php
-namespace Mediumart\Momo;
+namespace Mediumart\MobileMoney;
 
 abstract class BaseClient
 {
     /**
-     * base url path.
+     * The base url of all the api endpoints.
+     * 
+     * will be 'https://ericssondeveloperapi.portal.azure-api.net/' for the live env
+     * or 'https://proxy.momoapi.mtn.com/' for live testing
+     * or "https://sandbox.momodeveloper.mtn.com" for sandbox env
      * 
      * @var string
      */
-    protected $baseUrl;
+    protected $baseurl;
 
     /**
      * Http Client.
@@ -16,32 +20,13 @@ abstract class BaseClient
      * @var \GuzzleHttp\Client
      */
     protected $client;
-    
-    /**
-     * Subscription key.
-     * 
-     * @var string
-     */
-    protected $subscriptionKey;
-
-    /**
-     * Target Evironment.
-     * 
-     * @var string
-     */
-    protected $targetEnvironment;
 
     /**
      * Construct.
      */
-    public function __construct(
-        \GuzzleHttp\Client $client, 
-        string $subscriptionKey,
-        string $targetEnvironment = 'sandbox'
-        )
+    public function __construct(\GuzzleHttp\Client $client, string $baseurl)
     {
         $this->client = $client;
-        $this->subscriptionKey = $subscriptionKey;
-        $this->targetEnvironment = $targetEnvironment;
+        $this->baseurl = $baseurl;
     }
 }

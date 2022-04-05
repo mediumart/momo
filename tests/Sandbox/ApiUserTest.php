@@ -1,8 +1,8 @@
 <?php
-namespace Mediumart\Momo\Tests\Sandbox;
+namespace Mediumart\MobileMoney\Tests\Sandbox;
 
-use Mediumart\Momo\Sandbox\ApiUser;
-use Mediumart\Momo\Tests\TestCase;
+use Mediumart\MobileMoney\Sandbox\ApiUser;
+use Mediumart\MobileMoney\Tests\TestCase;
 
 class ApiUserTest extends TestCase
 {
@@ -26,6 +26,6 @@ class ApiUserTest extends TestCase
 
         $this->expectException(\Exception::class);
 
-        $value = $user->nonExistantProperty;
+        $value = $user->undefinedProperty;
     }
 }

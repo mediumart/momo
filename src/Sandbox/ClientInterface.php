@@ -1,5 +1,5 @@
 <?php
-namespace Mediumart\Momo\Sandbox;
+namespace Mediumart\MobileMoney\Sandbox;
 
 use Psr\Http\Message\ResponseInterface;
 

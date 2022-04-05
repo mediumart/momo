@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediumart\\Momo\\" : "src/"
+            "Mediumart\\MobileMoney\\" : "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mediumart\\Momo\\Tests\\": "tests/"
+            "Mediumart\\MobileMoney\\Tests\\": "tests/"
         }
     }
 }

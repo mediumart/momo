@@ -1,5 +1,5 @@
 <?php
-namespace Mediumart\Momo\Tests;
+namespace Mediumart\MobileMoney\Tests;
 
 use PHPUnit\Framework\TestCase as PHP_Unit_Test_Case;
 

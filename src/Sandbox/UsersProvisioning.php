@@ -1,5 +1,5 @@
 <?php
-namespace Mediumart\Momo\Sandbox;
+namespace Mediumart\MobileMoney\Sandbox;
 
 use Ramsey\Uuid\Uuid;
 

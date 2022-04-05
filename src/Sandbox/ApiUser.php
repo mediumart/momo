@@ -1,5 +1,5 @@
 <?php
-namespace Mediumart\Momo\Sandbox;
+namespace Mediumart\MobileMoney\Sandbox;
 
 class ApiUser
 {
@@ -33,7 +33,7 @@ class ApiUser
      * Get property value.
      * 
      * @param string $name
-     * @return void
+     * @return mixed
      */
     public function __get(string $name):mixed
     {
