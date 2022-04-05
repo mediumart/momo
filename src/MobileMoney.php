@@ -3,6 +3,9 @@ namespace Mediumart\MobileMoney;
 
 class MobileMoney
 {   
+    static protected $sandbox;
+    static protected $live;
+
     /**
      * Factory method for Sandbox environment.
      * 
@@ -10,7 +13,11 @@ class MobileMoney
      */
     static public function sandbox():Env\Factory
     {
-        return new Env\Sandbox;
+        if (! static::$sandbox) {
+            static::$sandbox = new Env\Sandbox;
+        }
+
+        return static::$sandbox;
     }
 
     /**
@@ -20,6 +27,10 @@ class MobileMoney
      */
     static public function live():Env\Factory
     {
-        return new Env\Live;
+        if (! static::$live) {
+            static::$live = new Env\Live;
+        }
+
+        return static::$live;
     }
 }

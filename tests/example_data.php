@@ -1,9 +1,7 @@
 <?php
 namespace Mediumart\MobileMoney\Tests;
 
-use Mediumart\MobileMoney\Collection\Collection;
-
-class CollectionTest extends TestCase
+class ExampleTest 
 {
     public function RequestToPay():void
     {
@@ -30,7 +28,7 @@ class CollectionTest extends TestCase
 
         // Expected a 202 Accepted response
 
-        $collection = new Collection();
-        $this->assertTrue(True);
+        // $collection = new Collection();
+        // $this->assertTrue(True);
     } 
 }

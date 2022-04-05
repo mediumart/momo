@@ -1,7 +1,7 @@
 <?php
 namespace Mediumart\MobileMoney\Env;
 
-class Sandbox implements Factory
+class Sandbox extends Factory
 {
     /**
      * Get the env base url.
@@ -10,6 +10,6 @@ class Sandbox implements Factory
      */
     protected function baseurl():string
     {
-        return 'https://ericssondeveloperapi.portal.azure-api.net/';
+        return 'https://sandbox.momodeveloper.mtn.com';
     }
 }

@@ -10,6 +10,6 @@ class Live extends Factory
      */
     protected function baseurl():string
     {
-        return 'https://sandbox.momodeveloper.mtn.com';
+        return 'https://ericssondeveloperapi.portal.azure-api.net/';
     }
 }
