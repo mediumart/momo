@@ -3,8 +3,19 @@ namespace Mediumart\MobileMoney\Tests;
 
 use Mediumart\MobileMoney\MobileMoney;
 
-class MomoTest extends TestCase
+class MobileMoneyTest extends TestCase
 {
+    public function testEnvFactoryIsSingleton():void
+    {
+        $factory = MobileMoney::sandbox();
+        $factory2 = MobileMoney::sandbox();
+        $this->assertSame($factory, $factory2);
+
+        $factory = MobileMoney::live();
+        $factory2 = MobileMoney::live();
+        $this->assertSame($factory, $factory2);
+    }
+
     public function servicesNames():array
     {
         return [
@@ -38,4 +49,6 @@ class MomoTest extends TestCase
         $this->expectException(\Exception::class);
         MobileMoney::live()->unknown();
     }
+
+    
 }

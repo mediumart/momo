@@ -52,10 +52,6 @@ abstract class Factory
      */
     static public function httpClient():\GuzzleHttp\Client
     {
-        if (! static::$httpClient) {
-            static::$httpClient = new \GuzzleHttp\Client;
-        }
-
-        return static::$httpClient;
+        return static::$httpClient ?? static::$httpClient = new \GuzzleHttp\Client;
     } 
 }
