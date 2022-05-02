@@ -33,9 +33,11 @@ abstract class Factory
             throw new \Exception('Unknown service');
         }
 
-        $classname = '\\Mediumart\\MobileMoney\\'.ucfirst($name).'\\Client';
+        $arguments = [
+            static::httpClient(), $this->baseurl()
+        ];
 
-        return new $classname(static::httpClient(), $this->baseurl());
+        return new (rtrim(__NAMESPACE__, '\Env').'\\'.ucfirst($name).'\\Client')(...$arguments);
     }
     
     /**

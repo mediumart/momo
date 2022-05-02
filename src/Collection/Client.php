@@ -4,8 +4,49 @@ namespace Mediumart\MobileMoney\Collection;
 use Mediumart\MobileMoney\BaseClient;
 use Psr\Http\Message\ResponseInterface;
 
-class Client extends BaseClient implements Api
+class Client extends BaseClient
 {
+    /**
+     * Claim a consent by the account holder for the requested scopes.
+     * 
+     * $payload format:
+     * 'login_hint=ID:{msisdn}/MSISDN&scope={scope}&access_type={online/offline}'
+     * 
+     * @param string $subscriptionKey
+     * @param string $oauth2Token
+     * @param string $targetEnv
+     * @param string $callbackUrl
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function bcAuthorize(
+        string $subscriptionKey,
+        string $oauth2Token,
+        string $targetEnv,
+        array $payload,
+        string $callbackUrl=null
+    ):ResponseInterface
+    {
+        $headers = [
+            'Authorization' => 'Bearer '.$oauth2Token,
+            'X-Target-Environment' => $targetEnv,
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Ocp-Apim-Subscription-Key' => $subscriptionKey
+        ];
+
+        if (! empty($callbackUrl)) 
+            $headers['X-Callback-Url'] = $callbackUrl;
+
+        return $this->client->request('POST', 
+            $this->baseurl.'/collection/v1_0/bc-authorize',
+            [
+                'headers'=> $headers,
+                
+                // Not So Sure about this...
+                'body' => json_encode($payload) // Not So Sure about this...
+            ]
+        );
+    }
+
     /**
      * Create an access token.
      * 
@@ -59,7 +100,7 @@ class Client extends BaseClient implements Api
             'Ocp-Apim-Subscription-Key' => $subscriptionKey
         ];
 
-        if ( !empty($callbackUrl) ) 
+        if (! empty($callbackUrl)) 
             $headers['X-Callback-Url'] = $callbackUrl;
 
         return $this->client->request('POST', 
