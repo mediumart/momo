@@ -55,7 +55,7 @@ class Client extends BaseClient
      * @param string $apiKey
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function createToken(
+    public function createAccessToken(
         string $subscriptionKey, 
         string $userReferenceId, 
         string $apiKey
