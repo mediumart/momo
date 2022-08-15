@@ -2,7 +2,12 @@
     "name": "mediumart/momo",
     "description": "MTN Mobile money implementation",
     "type": "library",
-    "keywords": ["MTN", "Mobile money", "Payment"],
+    "keywords": [
+        "MTN",
+        "Mobile money",
+        "Payment Service",
+        "Mediumart"
+    ],
     "authors": [
         {
             "name": "Isaac",
@@ -19,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediumart\\MobileMoney\\" : "src/"
+            "Mediumart\\MobileMoney\\": "src/"
         }
     },
     "autoload-dev": {
