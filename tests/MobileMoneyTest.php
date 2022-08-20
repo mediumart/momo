@@ -53,7 +53,7 @@ class MobileMoneyTest extends TestCase
     /**
      * @dataProvider servicesNames
      */
-    public function testServicesCalledStaticWithLiveAsDefaultEnvironment($service):void
+    public function testCallStaticOfServiceWithLiveAsDefaultEnvironment($service):void
     {
         $service = MobileMoney::{$service}();
         $this->assertNotNull($service);

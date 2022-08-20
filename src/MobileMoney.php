@@ -1,6 +1,16 @@
 <?php
 namespace Mediumart\MobileMoney;
 
+/**
+ * Services.
+ * 
+ * @method Env\Factory sandbox
+ * @method Env\Factory live
+ * @method Collection\Client collection
+ * @method Disbursement\Client disbursement
+ * @method Remittance\Client remittance
+ * @method Widget\Client widget
+ */
 class MobileMoney
 {   
     /**
