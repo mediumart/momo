@@ -32,4 +32,14 @@ class MobileMoney
     {
         return static::$live ?? static::$live = new Env\Live;
     }
+    
+    /**
+     * Get a service with 'Live' as default evnironment.
+     * 
+     * @return mixed
+     */
+    static public function __callStatic(string $name, array $arguments): mixed
+    {
+        return static::live()->{$name}(...$arguments);
+    }
 }

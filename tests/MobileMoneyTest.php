@@ -50,5 +50,12 @@ class MobileMoneyTest extends TestCase
         MobileMoney::live()->unknown();
     }
 
-    
+    /**
+     * @dataProvider servicesNames
+     */
+    public function testServicesCalledStaticWithLiveAsDefaultEnvironment($service):void
+    {
+        $service = MobileMoney::{$service}();
+        $this->assertNotNull($service);
+    }
 }

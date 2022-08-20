@@ -73,6 +73,58 @@ class Client extends BaseClient
     }
 
     /**
+     * Create an Oauth2 token.
+     * 
+     * @param string $subscriptionKey
+     * @param string $targetEnv
+     * @param string $userReferenceId
+     * @param string $apiKey
+     * @param array $payload
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function createOauth2Token(
+        string $subscriptionKey,
+        string $targetEnv,
+        string $userReferenceId, 
+        string $apiKey,
+        array $payload
+    ):ResponseInterface
+    {
+        return $this->client->request('POST',
+            $this->baseurl.'/collection/oauth2/token/',
+            [
+                'headers' => [
+                    'Authorization' => 'Basic '.\base64_encode($userReferenceId.':'.$apiKey),
+                    'X-Target-Environment' => $targetEnv,
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
+                ],
+
+                // Paylod format:
+                // grant_type=urn:openid:params:grant-type:ciba&auth_req_id={auth_req_id}
+                'body' => json_encode($payload)
+            ]
+        );
+    }
+
+    public function getAccountBalance(
+        string $subscriptionKey,
+        string $targetEnv,
+    ):ResponseInterface
+    {
+        return $this->client->request('GET',
+            $this->baseurl.'/collection/v1_0/account/balance',
+            [
+                'headers' => [
+                    'X-Target-Environment' => $targetEnv,
+                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
+                ]
+            ]
+        );
+    }
+
+
+    /**
      * Request a payment from a consumer (Payer).
      * 
      * @param string $subscriptionKey
