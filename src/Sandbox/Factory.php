@@ -12,10 +12,6 @@ class Factory
      */
     static public function httpClient():ClientInterface
     {
-        if (! static::$httpClient) {
-            static::$httpClient = new Client(new GuzzleHttpClient);
-        }
-        
-        return static::$httpClient;
+        return static::$httpClient ?? static::$httpClient = new Client(new GuzzleHttpClient);
     }
 }
