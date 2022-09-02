@@ -33,9 +33,9 @@ class ApiUser
      * Get property value.
      * 
      * @param string $name
-     * @return mixed
+     * @return string
      */
-    public function __get(string $name):mixed
+    public function __get(string $name):string
     {
         if (property_exists($this, $name)) {
             return $this->{$name};

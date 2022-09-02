@@ -1,52 +1,12 @@
 <?php
 namespace Mediumart\MobileMoney\Collection;
 
+use Exception;
 use Mediumart\MobileMoney\BaseClient;
 use Psr\Http\Message\ResponseInterface;
 
 class Client extends BaseClient
 {
-    /**
-     * Claim a consent by the account holder for the requested scopes.
-     * 
-     * $payload format:
-     * 'login_hint=ID:{msisdn}/MSISDN&scope={scope}&access_type={online/offline}'
-     * 
-     * @param string $subscriptionKey
-     * @param string $oauth2Token
-     * @param string $targetEnv
-     * @param string $callbackUrl
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function bcAuthorize(
-        string $subscriptionKey,
-        string $oauth2Token,
-        string $targetEnv,
-        array $payload,
-        string $callbackUrl=null
-    ):ResponseInterface
-    {
-        $headers = [
-            'Authorization' => 'Bearer '.$oauth2Token,
-            'X-Target-Environment' => $targetEnv,
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Ocp-Apim-Subscription-Key' => $subscriptionKey
-        ];
-
-        if (! empty($callbackUrl)) 
-            $headers['X-Callback-Url'] = $callbackUrl;
-
-        return $this->client->request('POST', 
-            $this->baseurl.'/collection/v1_0/bc-authorize',
-            [
-                'headers'=> $headers,
-                
-                // Not So Sure about this...
-                'body' => json_encode($payload) // Not So Sure about this...
-            ]
-        );
-    }
-
     /**
      * Create an access token.
      * 
@@ -73,56 +33,37 @@ class Client extends BaseClient
     }
 
     /**
-     * Create an Oauth2 token.
+     * Operation is used to check if an account holder is registered and active in the system.
+     * 
+     * @param string $accountHolderId
+     * 
+     * specifies the type of the party ID. Allowed values [msisdn, email, party_code].
+     * accountHolderId should explicitly be in small letters.
+     * @param string $accountHolderIdType 
      * 
      * @param string $subscriptionKey
      * @param string $targetEnv
-     * @param string $userReferenceId
-     * @param string $apiKey
-     * @param array $payload
+     * @param string $token
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function createOauth2Token(
+    public function validateAccountHolderStatus(
+        string $accountHolderId,
+        string $accountHolderIdType,
         string $subscriptionKey,
         string $targetEnv,
-        string $userReferenceId, 
-        string $apiKey,
-        array $payload
+        string $token
     ):ResponseInterface
     {
-        return $this->client->request('POST',
-            $this->baseurl.'/collection/oauth2/token/',
-            [
-                'headers' => [
-                    'Authorization' => 'Basic '.\base64_encode($userReferenceId.':'.$apiKey),
-                    'X-Target-Environment' => $targetEnv,
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
-                ],
-
-                // Paylod format:
-                // grant_type=urn:openid:params:grant-type:ciba&auth_req_id={auth_req_id}
-                'body' => json_encode($payload)
-            ]
-        );
-    }
-
-    public function getAccountBalance(
-        string $subscriptionKey,
-        string $targetEnv,
-    ):ResponseInterface
-    {
-        return $this->client->request('GET',
-            $this->baseurl.'/collection/v1_0/account/balance',
-            [
-                'headers' => [
+        return $this->client->request('GET', 
+            $this->baseurl.'/collection/v1_0/accountholder/'.$accountHolderIdType.'/'.$accountHolderId.'/active',[
+                'headers' =>  [
+                    'Authorization' => 'Bearer '.$token,
                     'X-Target-Environment' => $targetEnv,
                     'Ocp-Apim-Subscription-Key' => $subscriptionKey
                 ]
             ]
         );
     }
-
 
     /**
      * Request a payment from a consumer (Payer).
@@ -159,6 +100,233 @@ class Client extends BaseClient
             $this->baseurl.'/collection/v1_0/requesttopay',[
                 'headers' => $headers,
                 'body' => json_encode($payload)
+            ]
+        );
+    }
+
+    /**
+     * This operation is used to send additional Notification to an End User.
+     * 
+     * @param string $message
+     * @param string $subscriptionKey
+     * @param string $requestId
+     * @param string $targetEnv
+     * @param string $token
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function requestToPayDeliveryNotification(
+        string $message,
+        string $subscriptionKey,
+        string $requestId,
+        string $targetEnv,
+        string $token
+    ):ResponseInterface
+    {
+        if (strlen($message) > 160) {
+            throw new Exception('Notification message should be 160 characters max');
+        }
+
+        return $this->client->request('POST', 
+            $this->baseurl.'/collection/v1_0/requesttopay/'.$requestId.'/deliverynotification',[
+                'headers' => [
+                    'Authorization' => 'Bearer '.$token,
+                    'notificationMessage' => $message, // Max length 160
+                    'X-Target-Environment' => $targetEnv,
+                    'Content-Type' => 'application/json',
+                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
+                ],
+                'body' => json_encode(['notificationMessage' => $message])
+            ]
+        );
+    }
+
+    /**
+     * This operation is used to get the status of a request to pay. 
+     * X-Reference-Id that was passed in the post is used as reference to the request..
+     * 
+     * @param string $requestId
+     * @param string $subscriptionKey
+     * @param string $targetEnv
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function requestToPayTransactionStatus(
+        string $requestId,
+        string $subscriptionKey,
+        string $targetEnv,
+        string $token
+    ):ResponseInterface
+    {
+        return $this->client->request('GET', 
+            $this->baseurl.'/collection/v1_0/requesttopay/'.$requestId,[
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                    'X-Target-Environment' => $targetEnv,
+                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
+                ]
+            ]
+        );
+    }
+
+    /**
+     * This operation is used to request a withdrawal (cash-out) from a consumer (Payer). 
+     * The payer will be asked to authorize the withdrawal. 
+     * The transaction will be executed once the payer has authorized the withdrawal
+     * 
+     * @param string $requestId
+     * @param string $token
+     * @param string $subscriptionKey
+     * @param string $targetEnv
+     * @param string $payload
+     * @param string $callbackUrl
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function requestToWithdrawV1(
+        string $requestId,
+        string $token,
+        string $subscriptionKey,
+        string $targetEnv,
+        array $payload,
+        string $callbackUrl=null
+    ):ResponseInterface
+    {
+        $headers = [
+            'Authorization' => 'Bearer '.$token,
+            'X-Reference-Id' => $requestId,
+            'X-Target-Environment' => $targetEnv,
+            'Ocp-Apim-Subscription-Key' => $subscriptionKey
+        ];
+
+        if (! empty($callbackUrl)) 
+            $headers['X-Callback-Url'] = $callbackUrl;
+
+        return $this->client->request('POST', 
+            $this->baseurl.'/collection/v1_0/requesttowithdraw',[
+                'headers' => $headers,
+                'body' =>json_encode($payload)
+            ]
+        );
+    }
+
+    /**
+     * This operation is used to request a withdrawal (cash-out) from a consumer (Payer). 
+     * The payer will be asked to authorize the withdrawal. 
+     * The transaction will be executed once the payer has authorized the withdrawal
+     * 
+     * @param string $requestId
+     * @param string $token
+     * @param string $subscriptionKey
+     * @param string $targetEnv
+     * @param string $payload
+     * @param string $callbackUrl
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function requestToWithdrawV2(
+        string $requestId,
+        string $token,
+        string $subscriptionKey,
+        string $targetEnv,
+        array $payload,
+        string $callbackUrl=null
+    ):ResponseInterface
+    {
+        $headers = [
+            'Authorization' => 'Bearer '.$token,
+            'X-Reference-Id' => $requestId,
+            'X-Target-Environment' => $targetEnv,
+            'Ocp-Apim-Subscription-Key' => $subscriptionKey
+        ];
+
+        if (! empty($callbackUrl)) 
+            $headers['X-Callback-Url'] = $callbackUrl;
+
+        return $this->client->request('POST', 
+            $this->baseurl.'/collection/v2_0/requesttowithdraw',[
+                'headers' => $headers,
+                'body' =>json_encode($payload)
+            ]
+        );
+    }
+
+    /**
+     * This operation is used to get the status of a request to withdraw. 
+     * X-Reference-Id that was passed in the post is used as reference to the request.
+     * 
+     * @param string $requestId
+     * @param string $userReferenceId
+     * @param string $apiKey
+     * @param string $subscriptionKey
+     * @param string $targetEnv
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function requestToWithdrawV1TransactionStatus(
+        string $requestId,
+        string $token,
+        string $subscriptionKey,
+        string $targetEnv
+    ):ResponseInterface
+    {
+        return $this->client->request('GET', 
+            $this->baseurl.'/collection/v1_0/requesttowithdraw/'.$requestId,[
+                'headers' => [
+                    'Authorization' => 'Bearer '.$token,
+                    'X-Target-Environment' => $targetEnv,
+                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
+                ]
+            ]
+        );
+    }
+
+    /**
+     * Get Account Balance.
+     * 
+     * @param string $subscriptionKey
+     * @param string $targetEnv
+     * @param string $token
+     */
+    public function getAccountBalance(
+        string $subscriptionKey,
+        string $targetEnv,
+        string $token
+    ):ResponseInterface
+    {
+        return $this->client->request('GET',
+            $this->baseurl.'/collection/v1_0/account/balance',
+            [
+                'headers' => [
+                    // // optional ???
+                    'Authorization' => 'Bearer '.$token,
+
+                    'X-Target-Environment' => $targetEnv,
+                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
+                ]
+            ]
+        );
+    }
+
+    /**
+     * This operation returns personal information of the account holder. 
+     * The operation does not need any consent by the account holder.
+     * 
+     * @param string $msisdn
+     * @param string $subscriptionKey
+     * @param string $targetEnv
+     * @param string $token
+     */
+    public function getBasicUserinfo(
+        string $msisdn, // phone number
+        string $subscriptionKey,
+        string $targetEnv,
+        string $token,
+    ):ResponseInterface
+    {
+        return $this->client->request('GET',
+            $this->baseurl.'/collection/v1_0/accountholder/msisdn/'.$msisdn.'/basicuserinfo',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer '.$token,
+                    'X-Target-Environment' => $targetEnv,
+                    'Ocp-Apim-Subscription-Key' => $subscriptionKey
+                ]
             ]
         );
     }
