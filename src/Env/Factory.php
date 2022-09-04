@@ -18,8 +18,7 @@ abstract class Factory
     private $services = [
         'collection',
         'disbursement',
-        'remittance',
-        'widget'
+        'remittance'
     ];
 
     /**

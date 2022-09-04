@@ -28,8 +28,7 @@ class MobileMoneyTest extends TestCase
         return [
             ['collection'],
             ['disbursement'],
-            ['remittance'],
-            ['widget']
+            ['remittance']
         ];
     }
 
