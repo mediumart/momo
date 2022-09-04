@@ -1,12 +1,9 @@
 <?php
 namespace Mediumart\MobileMoney\Tests;
 
-use Mediumart\MobileMoney\Collection\Client;
-use Mediumart\MobileMoney\MobileMoney;
-use Mediumart\MobileMoney\Sandbox\ApiUser;
 use Mediumart\MobileMoney\Sandbox\UsersProvisioning;
 
-class ClientTestCase extends TestCase
+trait ApiUserAndAccessToken
 {
     /**
      * @var ApiUser
@@ -14,23 +11,27 @@ class ClientTestCase extends TestCase
     protected $sandboxUser;
 
     /**
-     * @var Client
+     * @var string
      */
-    protected $client;
-
     protected $accessToken;
-    protected $subscriptionKey = '0ce2ea5d5c98474f94034146fe69d3be';
+
+    /**
+     * @var bool
+     */
     protected $apiTested = true;
 
-    protected function setUp():void
-    {        
-        if (! $this->apiTested)  {
+    /**
+     * Setup
+     */
+    protected function setUp():void 
+    {
+        if (! $this->apiTested) {
 
             if (! $this->sandboxUser) {
                 $this->sandboxUser = UsersProvisioning::sandboxUserFor($this->subscriptionKey);
             }
             
-            $this->client = MobileMoney::sandbox()->collection();
+            $this->instanciateSandboxClient();
 
             if (! $this->accessToken) {
                 $response = $this->client->createAccessToken(
@@ -42,5 +43,9 @@ class ClientTestCase extends TestCase
                 $this->accessToken = json_decode($response)->access_token;    
             }
         }
+    }
+
+    protected function instanciateSandboxClient():void
+    {
     }
 }

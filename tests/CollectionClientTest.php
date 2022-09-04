@@ -2,9 +2,25 @@
 namespace Mediumart\MobileMoney\Tests;
 
 use Ramsey\Uuid\Uuid;
+use Mediumart\MobileMoney\MobileMoney;
+use Mediumart\MobileMoney\Collection\Client;
 
-class CollectionClientTest extends ClientTestCase
+class CollectionClientTest extends TestCase
 {
+    use ApiUserAndAccessToken;
+
+    /**
+     * @var Client
+     */
+    protected $client;
+    
+    protected $subscriptionKey = '0ce2ea5d5c98474f94034146fe69d3be';
+    
+    protected function instanciateSandboxClient():void
+    {
+        $this->client = MobileMoney::sandbox()->collection();
+    }
+
     public function testRequestToPay():void
     {
         if (! $this->apiTested) {
