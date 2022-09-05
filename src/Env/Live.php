@@ -8,8 +8,8 @@ class Live extends Factory
      * 
      * @return string
      */
-    protected function baseurl():string
+    protected function baseurl(string $serviceName):string
     {
-        return 'https://ericssondeveloperapi.portal.azure-api.net';
+        return 'https://ericssondeveloperapi.portal.azure-api.net/'.$serviceName;
     }
 }

@@ -64,16 +64,9 @@ class MobileMoneyTest extends TestCase
         $service = MobileMoney::{$serviceName}();
         $this->assertInstanceOf(BaseClient::class, $service);
 
-        $reflection = new ReflectionClass($service);
-
         $this->assertEquals(
-            'https://ericssondeveloperapi.portal.azure-api.net', 
-            $reflection->getProperty('baseurl')->getValue($service)
-        );
-
-        $this->assertEquals(
-            $serviceName,
-            $reflection->getProperty('serviceName')->getValue($service)
+            'https://ericssondeveloperapi.portal.azure-api.net/'.$serviceName, 
+            (new ReflectionClass($service))->getProperty('baseurl')->getValue($service)
         );
     }
 }

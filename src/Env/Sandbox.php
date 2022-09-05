@@ -8,8 +8,8 @@ class Sandbox extends Factory
      * 
      * @return string
      */
-    protected function baseurl():string
+    protected function baseurl(string $serviceName):string
     {
-        return 'https://sandbox.momodeveloper.mtn.com';
+        return 'https://sandbox.momodeveloper.mtn.com/'.$serviceName;
     }
 }

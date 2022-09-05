@@ -33,7 +33,7 @@ abstract class Factory
         }
 
         $arguments = [
-            static::httpClient(), $this->baseurl(), $name
+            static::httpClient(), $this->baseurl($name)
         ];
 
         return new (rtrim(__NAMESPACE__, '\Env').'\\'.ucfirst($name).'\\Client')(...$arguments);
@@ -44,7 +44,7 @@ abstract class Factory
      * 
      * @return string
      */
-    abstract protected function baseurl():string;
+    abstract protected function baseurl(string $serviceName):string;
 
     /**
      * Http client.
