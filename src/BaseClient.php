@@ -22,11 +22,19 @@ abstract class BaseClient
     protected $client;
 
     /**
+     * Service Name.
+     * 
+     * @var string
+     */
+    protected $serviceName;
+
+    /**
      * Construct.
      */
-    public function __construct(\GuzzleHttp\Client $client, string $baseurl)
+    public function __construct(\GuzzleHttp\Client $client, string $baseurl, string $serviceName)
     {
         $this->client = $client;
         $this->baseurl = $baseurl;
+        $this->serviceName = $serviceName;
     }
 }

@@ -33,7 +33,7 @@ abstract class Factory
         }
 
         $arguments = [
-            static::httpClient(), $this->baseurl()
+            static::httpClient(), $this->baseurl(), $name
         ];
 
         return new (rtrim(__NAMESPACE__, '\Env').'\\'.ucfirst($name).'\\Client')(...$arguments);

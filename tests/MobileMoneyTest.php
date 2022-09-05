@@ -59,14 +59,21 @@ class MobileMoneyTest extends TestCase
     /**
      * @dataProvider servicesNames
      */
-    public function testCallStaticOfServiceWithLiveAsDefaultEnvironment($service):void
+    public function testCallStaticOfServiceWithLiveAsDefaultEnvironment($serviceName):void
     {
-        $service = MobileMoney::{$service}();
+        $service = MobileMoney::{$serviceName}();
         $this->assertInstanceOf(BaseClient::class, $service);
+
+        $reflection = new ReflectionClass($service);
 
         $this->assertEquals(
             'https://ericssondeveloperapi.portal.azure-api.net', 
-            (new ReflectionClass($service))->getProperty('baseurl')->getValue($service)
+            $reflection->getProperty('baseurl')->getValue($service)
+        );
+
+        $this->assertEquals(
+            $serviceName,
+            $reflection->getProperty('serviceName')->getValue($service)
         );
     }
 }
