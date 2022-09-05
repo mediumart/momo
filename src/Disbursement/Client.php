@@ -5,6 +5,10 @@ use Mediumart\MobileMoney\BaseClient;
 use Mediumart\MobileMoney\TransferApi;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * @method \Psr\Http\Message\ResponseInterface transfer()
+ * @method \Psr\Http\Message\ResponseInterface getTransferStatus()
+ */
 class Client extends BaseClient
 {
     use TransferApi;
