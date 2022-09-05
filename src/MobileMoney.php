@@ -7,7 +7,6 @@ namespace Mediumart\MobileMoney;
 * @method static Collection\Client collection()
 * @method static Disbursement\Client disbursement()
 * @method static Remittance\Client remittance()
-* @method static Widget\Client widget()
 */
 class MobileMoney
 {   
