@@ -42,6 +42,7 @@ abstract class Factory
     /**
      * Get the env base url.
      * 
+     * @param string $serviceName
      * @return string
      */
     abstract protected function baseurl(string $serviceName):string;

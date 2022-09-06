@@ -97,6 +97,7 @@ abstract class BaseClient
      * @param string $subscriptionKey
      * @param string $targetEnv
      * @param string $token
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function getAccountBalance(
         string $subscriptionKey,
@@ -124,6 +125,7 @@ abstract class BaseClient
      * @param string $subscriptionKey
      * @param string $targetEnv
      * @param string $token
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function getBasicUserinfo(
         string $msisdn, // phone number
