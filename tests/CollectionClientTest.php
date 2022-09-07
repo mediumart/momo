@@ -13,12 +13,12 @@ class CollectionClientTest extends TestCase
      * @var Client
      */
     protected $client;
-    
+
     protected $subscriptionKey = '0ce2ea5d5c98474f94034146fe69d3be';
     
-    protected function instanciateSandboxClient():void
+    protected function getServiceClient():mixed
     {
-        $this->client = MobileMoney::sandbox()->collection();
+        return MobileMoney::sandbox()->collection();
     }
 
     public function testRequestToPay():void

@@ -8,17 +8,17 @@ use Mediumart\MobileMoney\Disbursement\Client;
 class DisbursementClientTest extends TestCase
 {
     use ApiUserAndAccessToken;
-
+    
     /**
      * @var Client
      */
     protected $client;
-    
+
     protected $subscriptionKey = '0f0433705bbe4985800bd0a3f70553c5';
     
-    protected function instanciateSandboxClient():void
+    protected function getServiceClient():mixed
     {
-        $this->client = MobileMoney::sandbox()->disbursement();
+        return MobileMoney::sandbox()->disbursement();
     }
 
     public function testDepositV1AndV2():void

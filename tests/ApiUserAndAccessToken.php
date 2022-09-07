@@ -31,7 +31,7 @@ trait ApiUserAndAccessToken
                 $this->sandboxUser = UsersProvisioning::sandboxUserFor($this->subscriptionKey);
             }
             
-            $this->instanciateSandboxClient();
+            $this->client = $this->getServiceClient();
 
             if (! $this->accessToken) {
                 $response = $this->client->createAccessToken(
@@ -43,9 +43,5 @@ trait ApiUserAndAccessToken
                 $this->accessToken = json_decode($response)->access_token;    
             }
         }
-    }
-
-    protected function instanciateSandboxClient():void
-    {
     }
 }
