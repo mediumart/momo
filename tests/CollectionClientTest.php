@@ -18,7 +18,7 @@ class CollectionClientTest extends TestCase
     
     protected function getServiceClient():mixed
     {
-        return MobileMoney::sandbox()->collection();
+        return MobileMoney::collection();
     }
 
     public function testRequestToPay():void

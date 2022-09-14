@@ -18,7 +18,7 @@ class DisbursementClientTest extends TestCase
     
     protected function getServiceClient():mixed
     {
-        return MobileMoney::sandbox()->disbursement();
+        return MobileMoney::disbursement();
     }
 
     public function testDepositV1AndV2():void
