@@ -40,7 +40,7 @@ trait Factory
     {
         if (! in_array($name, static::$services)) {
             throw new \Exception(
-                'Unknown service. Supported services from Mtn Mobile Money products are: collection,disbursement, and remittance.'
+                'Unknown service. Supported services for Mtn Mobile Money are: collection,disbursement, and remittance.'
             );
         }
 
@@ -70,6 +70,8 @@ trait Factory
      */
     static public function sandbox():void
     {
-        define('MOMO_SANDBOX_ENVIRONMENT', 'sandbox');
+        if (! defined('MOMO_SANDBOX_ENVIRONMENT')) {
+            define('MOMO_SANDBOX_ENVIRONMENT', 'sandbox');
+        }
     }
 }

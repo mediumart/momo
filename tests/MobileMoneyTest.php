@@ -38,8 +38,11 @@ class MobileMoneyTest extends TestCase
         );
     }
 
-    public function testUnknownSandboxServices():void
+    public function testUnknownServices():void
     {
+        $this->expectException(\Exception::class);
+        MobileMoney::unknown('sandbox');
+
         $this->expectException(\Exception::class);
         MobileMoney::unknown();
     }
