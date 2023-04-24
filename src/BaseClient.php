@@ -131,7 +131,7 @@ abstract class BaseClient
         string $msisdn, // phone number
         string $subscriptionKey,
         string $targetEnv,
-        string $token,
+        string $token
     ):ResponseInterface
     {
         return $this->client->request('GET',

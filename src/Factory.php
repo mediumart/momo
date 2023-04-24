@@ -4,6 +4,13 @@ namespace Mediumart\MobileMoney;
 trait Factory
 {
     /**
+     * Current environement.
+     * 
+     * @var string
+     */
+    static public $env = 'live';
+
+    /**
      * Http client.
      * 
      * @var \GuzzleHttp\Client
@@ -36,23 +43,44 @@ trait Factory
      * 
      * @return mixed
      */
-    static public function __callStatic($name, $arguments):mixed
+    public static function __callStatic($name, $arguments):mixed
     {
-        if (! in_array($name, static::$services)) {
-            throw new \Exception(
-                'Unknown service. Supported services for Mtn Mobile Money are: collection,disbursement, and remittance.'
-            );
+        if (! \in_array($name, static::$services)) {
+            $msg = "Unknown service: [{$name}]. "
+                . "Supported services for Mtn Mobile Money are: " 
+                . "collection, disbursement, and remittance.";
+
+            throw new \Exception($msg);
         }
 
-        $env = defined('MOMO_SANDBOX_ENVIRONMENT') ||
-                    (array_key_exists(0, $arguments) && $arguments[0] == 'sandbox') 
-                            ? 'sandbox' : 'live'; 
+        $env = isset($arguments[0]) 
+                    && $arguments[0] === 'sandbox' 
+                    ? 'sandbox' 
+                    : null;
 
-        $arguments = [
-            static::httpClient(), static::$baseurls[$env].$name
-        ];
+        return static::getServiceInstance($name, $env);
+    }
 
-        return new (__NAMESPACE__.'\\'.ucfirst($name) .'\\Client')(...$arguments);
+    /**
+     * Set Momo Environment.
+     *
+     * @param string $value
+     * 
+     * @return void
+     */
+    public static function setCurrentEnvironment(string $value)
+    {
+        if (\in_array($value, ['sandbox', 'live'])) static::$env = $value;
+    }
+
+    /**
+     * Get Momo Environment.
+     *
+     * @return string
+     */
+    public static function getCurrentEnvironment(): string 
+    {
+        return static::$env;
     }
 
     /**
@@ -60,18 +88,29 @@ trait Factory
      * 
      * @return \GuzzleHttp\Client
      */
-    static protected function httpClient():\GuzzleHttp\Client
+    protected static function httpClient():\GuzzleHttp\Client
     {
         return static::$httpClient ?? static::$httpClient = new \GuzzleHttp\Client;
     }
 
     /**
-     * Enable sandbox environement.
+     * Get Service instance.
+     * 
+     * @param string $name
+     * @param string|null $env
+     * 
+     * @return mixed
      */
-    static public function sandbox():void
-    {
-        if (! defined('MOMO_SANDBOX_ENVIRONMENT')) {
-            define('MOMO_SANDBOX_ENVIRONMENT', 'sandbox');
-        }
+    protected static function getServiceInstance($name, $env = null): mixed
+    {   
+        $env = $env ?? static::$env;
+
+        $namespace = __NAMESPACE__;
+
+        $instanceName = ucfirst($name);
+
+        $instanceClass = "{$namespace}\\{$instanceName}\\Client";
+
+        return new $instanceClass(static::httpClient(), static::$baseurls[$env].$name);
     }
 }

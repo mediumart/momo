@@ -38,6 +38,15 @@ class MobileMoneyTest extends TestCase
         );
     }
 
+    public function testSetAndGetCurrentEnvironmentGlobally()
+    {
+        MobileMoney::setCurrentEnvironment('sandbox');
+        $this->assertEquals('sandbox', MobileMoney::getCurrentEnvironment());
+
+        MobileMoney::setCurrentEnvironment('live');
+        $this->assertEquals('live', MobileMoney::getCurrentEnvironment());
+    }
+
     public function testUnknownServices():void
     {
         $this->expectException(\Exception::class);
