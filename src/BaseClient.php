@@ -34,6 +34,27 @@ abstract class BaseClient
     }
 
     /**
+     * Set client baseurl
+     *
+     * @param string $baseurl
+     * @return void
+     */
+    public function setBaseurl(string $baseurl) 
+    {
+        $this->baseurl = $baseurl;
+    }
+
+    /**
+     * Get client baseurl
+     *
+     * @return string
+     */
+    public function getBaseurl():string
+    {
+        return $this->baseurl;
+    }
+
+    /**
      * Create an access token.
      * 
      * @param string $subscriptionKey

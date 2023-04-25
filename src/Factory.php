@@ -39,6 +39,13 @@ trait Factory
     ];
 
     /**
+     * Momo Services instances.
+     * 
+     * @var array
+     */
+    static protected $servicesInstances = [];
+
+    /**
      * Get a new Service instance.
      * 
      * @return mixed
@@ -105,12 +112,32 @@ trait Factory
     {   
         $env = $env ?? static::$env;
 
+        if (\array_key_exists($name, static::$servicesInstances)) {
+            $i = static::$servicesInstances[$name];
+            $i->setBaseurl(static::$baseurls[$env].$name);
+
+            return $i;
+        }
+
+        return static::$servicesInstances[$name] = static::newServiceInstance($name, $env);  
+    }
+
+    /**
+     * Create a new service instance.
+     *
+     * @param string $name
+     * @param string $env
+     * 
+     * @return mixed
+     */
+    protected static function newServiceInstance($name, $env): mixed
+    {   
         $namespace = __NAMESPACE__;
 
         $instanceName = ucfirst($name);
 
         $instanceClass = "{$namespace}\\{$instanceName}\\Client";
 
-        return new $instanceClass(static::httpClient(), static::$baseurls[$env].$name);
+        return new $instanceClass(static::httpClient(), static::$baseurls[$env].$name);  
     }
 }
