@@ -3,7 +3,6 @@ namespace Mediumart\MobileMoney\Tests;
 
 use Mediumart\MobileMoney\MobileMoney;
 use Mediumart\MobileMoney\BaseClient;
-use ReflectionClass;
 
 class MobileMoneyTest extends TestCase
 {
@@ -26,7 +25,7 @@ class MobileMoneyTest extends TestCase
 
         $this->assertEquals(
             'https://sandbox.momodeveloper.mtn.com/'.$name, 
-            (new ReflectionClass($service1))->getProperty('baseurl')->getValue($service1)
+            $service1->getBaseurl()
         );
 
         $service2 = MobileMoney::{$name}();
@@ -34,7 +33,7 @@ class MobileMoneyTest extends TestCase
 
         $this->assertEquals(
             'https://ericssondeveloperapi.portal.azure-api.net/'.$name, 
-            (new ReflectionClass($service2))->getProperty('baseurl')->getValue($service2)
+            $service2->getBaseurl()
         );
     }
 

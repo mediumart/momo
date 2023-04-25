@@ -10,11 +10,10 @@ class LiveApiTest extends TestCase
     {
         $this->assertTrue(True);
         
-        // $this->assertNotNull(
-        //     $subscriptionKey = '0ce2ea5d5c98474f94034146fe69d3be';
-        //     $user = UsersProvisioning::sandboxUserFor($subscriptionKey);
-        // );
-
+        // $subscriptionKey = '0ce2ea5d5c98474f94034146fe69d3be';
+        // $user = UsersProvisioning::sandboxUserFor($subscriptionKey);
         // var_dump($user);
+
+        // $this->assertNotNull($user);
     } 
 }
