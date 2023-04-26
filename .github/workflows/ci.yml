@@ -14,12 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         php-version:
-          - "7.2.5"
-          - "7.3"
-          - "7.4"
           - "8.0"
           - "8.1"
           - "8.2"
@@ -54,7 +51,7 @@ jobs:
       - name: Execute tests
         run: |
           php --version
-          vendor/bin/phpunit --display-deprecation --coverage-clover clover.xml --verbose
+          vendor/bin/phpunit --coverage-clover clover.xml --verbose
 
       - name: Coveralls
         run: vendor/bin/php-coveralls -v --coverage_clover='clover.xml' --json_path='coveralls-upload.json'
