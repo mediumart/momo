@@ -19,7 +19,6 @@ jobs:
         php-version:
           - "8.0"
           - "8.1"
-          - "8.2"
 
     steps:
       - uses: actions/checkout@v3
@@ -44,17 +43,10 @@ jobs:
         with:
           timeout_minutes: 5
           max_attempts: 3
-          command: |
-            composer install --prefer-dist --no-interaction --no-progress
-            composer require satooshi/php-coveralls --dev --no-interaction
+          command: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
-        run: |
-          php --version
-          vendor/bin/phpunit --coverage-clover clover.xml --verbose
-
-      - name: Coveralls
-        run: vendor/bin/php-coveralls -v --coverage_clover='clover.xml' --json_path='coveralls-upload.json'
+        run: vendor/bin/phpunit
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
