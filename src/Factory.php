@@ -5,21 +5,21 @@ trait Factory
 {
     /**
      * Current environement.
-     * 
+     *
      * @var string
      */
-    static public $env = 'live';
+    static protected $env = 'live';
 
     /**
      * Http client.
-     * 
+     *
      * @var \GuzzleHttp\Client
      */
     static protected $httpClient;
 
     /**
      * paths.
-     * 
+     *
      * @var array
      */
     static protected $baseurls = [
@@ -29,7 +29,7 @@ trait Factory
 
     /**
      * Momo Services names.
-     * 
+     *
      * @var array
      */
     static protected $services = [
@@ -40,29 +40,29 @@ trait Factory
 
     /**
      * Momo Services instances.
-     * 
+     *
      * @var array
      */
     static protected $servicesInstances = [];
 
     /**
      * Get a new Service instance.
-     * 
+     *
      * @return mixed
      */
     public static function __callStatic($name, $arguments):mixed
     {
         if (! \in_array($name, static::$services)) {
             $msg = "Unknown service: [{$name}]. "
-                . "Supported services for Mtn Mobile Money are: " 
+                . "Supported services for Mtn Mobile Money are: "
                 . "collection, disbursement, and remittance.";
 
             throw new \Exception($msg);
         }
 
-        $env = isset($arguments[0]) 
-                    && $arguments[0] === 'sandbox' 
-                    ? 'sandbox' 
+        $env = isset($arguments[0])
+                    && $arguments[0] === 'sandbox'
+                    ? 'sandbox'
                     : null;
 
         return static::getServiceInstance($name, $env);
@@ -72,7 +72,7 @@ trait Factory
      * Set Momo Environment.
      *
      * @param string $value
-     * 
+     *
      * @return void
      */
     public static function setCurrentEnvironment(string $value)
@@ -85,14 +85,14 @@ trait Factory
      *
      * @return string
      */
-    public static function getCurrentEnvironment(): string 
+    public static function getCurrentEnvironment(): string
     {
         return static::$env;
     }
 
     /**
      * Get http client.
-     * 
+     *
      * @return \GuzzleHttp\Client
      */
     protected static function httpClient():\GuzzleHttp\Client
@@ -102,14 +102,14 @@ trait Factory
 
     /**
      * Get Service instance.
-     * 
+     *
      * @param string $name
      * @param string|null $env
-     * 
+     *
      * @return mixed
      */
     protected static function getServiceInstance($name, $env = null): mixed
-    {   
+    {
         $env = $env ?? static::$env;
 
         if (\array_key_exists($name, static::$servicesInstances)) {
@@ -119,7 +119,7 @@ trait Factory
             return $i;
         }
 
-        return static::$servicesInstances[$name] = static::newServiceInstance($name, $env);  
+        return static::$servicesInstances[$name] = static::newServiceInstance($name, $env);
     }
 
     /**
@@ -127,17 +127,17 @@ trait Factory
      *
      * @param string $name
      * @param string $env
-     * 
+     *
      * @return mixed
      */
     protected static function newServiceInstance($name, $env): mixed
-    {   
+    {
         $namespace = __NAMESPACE__;
 
         $instanceName = ucfirst($name);
 
         $instanceClass = "{$namespace}\\{$instanceName}\\Client";
 
-        return new $instanceClass(static::httpClient(), static::$baseurls[$env].$name);  
+        return new $instanceClass(static::httpClient(), static::$baseurls[$env].$name);
     }
 }
