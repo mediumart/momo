@@ -1,25 +1,29 @@
 <?php
 namespace Mediumart\MobileMoney\Sandbox;
 
+/**
+ * @property-read string $id
+ * @property-read string $apiKey
+ */
 class ApiUser
 {
     /**
      * Reference Id.
-     * 
+     *
      * @var string
      */
     protected $id;
 
     /**
      * Api Key.
-     * 
+     *
      * @var string
      */
     protected $apiKey;
 
     /**
      * Construct.
-     * 
+     *
      * @param string $id
      * @param string $apiKey
      */
@@ -31,7 +35,7 @@ class ApiUser
 
     /**
      * Get property value.
-     * 
+     *
      * @param string $name
      * @return string
      */
