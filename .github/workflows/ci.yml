@@ -1,4 +1,4 @@
-name: CI Phpunit
+name: CI phpunit
 
 on:
   push:
