@@ -20,12 +20,9 @@ jobs:
       - uses: php-actions/composer@v6
 
       - name: PHPStan
-        uses: php-actions/phpstan@master
-        with:
-          path: src/
-          version: "1.1"
-          level: 9
-          php_version: ${{ matrix.php }}
+        run: |
+          composer require --dev phpstan/phpstan
+          vendor/bin/phpstan analyze src --level=9
 
   build-test:
     runs-on: ubuntu-latest
