@@ -1,7 +1,8 @@
 # Mediumart momo
 
-[![Build Status](https://github.com/mediumart/momo/actions/workflows/ci.yml/badge.svg)](https://github.com/stripe/stripe-php/actions?query=branch%3Amaster)
-[![License](https://poser.pugx.org/stripe/stripe-php/license.svg)](https://packagist.org/packages/stripe/stripe-php)
+![Build Status](https://github.com/mediumart/momo/actions/workflows/ci.yml/badge.svg)
+![Phpstan](https://img.shields.io/badge/PHPStan-level%209-brightgreen.svg?style=flat)
+![License](https://poser.pugx.org/stripe/stripe-php/license.svg)
 
 An MTN Mobile Money php client.
 
