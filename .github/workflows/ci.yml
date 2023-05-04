@@ -6,6 +6,26 @@ on:
       - master
 
 jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php:
+          - "8.1"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: php-actions/composer@v6
+
+      - name: PHPStan
+        uses: php-actions/phpstan@master
+        with:
+          version: "1.1"
+          level: 9
+          php_version: ${{ matrix.php }}
+
   build-test:
     runs-on: ubuntu-latest
 
@@ -24,10 +44,5 @@ jobs:
         with:
           version: "9.5"
           bootstrap: vendor/autoload.php
-          php_extensions: "xdebug"
-          coverage_clover: "clover.xml"
           configuration: phpunit.xml.dist
           php_version: ${{ matrix.php }}
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
