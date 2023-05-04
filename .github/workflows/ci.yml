@@ -28,3 +28,6 @@ jobs:
           coverage_clover: "clover.xml"
           configuration: phpunit.xml.dist
           php_version: ${{ matrix.php }}
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
