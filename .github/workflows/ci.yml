@@ -20,9 +20,7 @@ jobs:
       - uses: php-actions/composer@v6
 
       - name: PHPStan
-        run: |
-          composer require --dev phpstan/phpstan
-          vendor/bin/phpstan analyze src --level=9
+        run: vendor/bin/phpstan analyze src --level=9
 
   build-test:
     runs-on: ubuntu-latest
