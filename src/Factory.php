@@ -13,14 +13,14 @@ trait Factory
     /**
      * Http client.
      *
-     * @var \GuzzleHttp\Client
+     * @var \GuzzleHttp\Client | null
      */
     static protected $httpClient;
 
     /**
      * paths.
      *
-     * @var array
+     * @var string[]
      */
     static protected $baseurls = [
         'sandbox' => 'https://sandbox.momodeveloper.mtn.com/',
@@ -30,7 +30,7 @@ trait Factory
     /**
      * Momo Services names.
      *
-     * @var array
+     * @var string[]
      */
     static protected $services = [
         'collection',
@@ -41,16 +41,18 @@ trait Factory
     /**
      * Momo Services instances.
      *
-     * @var array
+     * @var mixed[]
      */
     static protected $servicesInstances = [];
 
     /**
      * Get a new Service instance.
      *
+     * @param string $name
+     * @param mixed[] $arguments
      * @return mixed
      */
-    public static function __callStatic($name, $arguments):mixed
+    public static function __callStatic(string $name, array $arguments):mixed
     {
         if (! \in_array($name, static::$services)) {
             $msg = "Unknown service: [{$name}]. "
@@ -108,11 +110,12 @@ trait Factory
      *
      * @return mixed
      */
-    protected static function getServiceInstance($name, $env = null): mixed
+    protected static function getServiceInstance(string $name, string $env = null): mixed
     {
         $env = $env ?? static::$env;
 
         if (\array_key_exists($name, static::$servicesInstances)) {
+            /** @var BaseClient */
             $i = static::$servicesInstances[$name];
             $i->setBaseurl(static::$baseurls[$env].$name);
 
@@ -130,7 +133,7 @@ trait Factory
      *
      * @return mixed
      */
-    protected static function newServiceInstance($name, $env): mixed
+    protected static function newServiceInstance(string $name, string $env): mixed
     {
         $namespace = __NAMESPACE__;
 

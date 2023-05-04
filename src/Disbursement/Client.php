@@ -12,20 +12,20 @@ use Psr\Http\Message\ResponseInterface;
 class Client extends BaseClient
 {
     use TransferApi;
-    
+
     /**
      * Deposit an amount from the owner’s account to a payee account.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
      * @param string $targetEnv
-     * @param array $payload
+     * @param mixed[] $payload
      * @param string $callbackUrl
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function depositV1(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv,
@@ -44,7 +44,7 @@ class Client extends BaseClient
             $headers['X-Callback-Url'] = $callbackUrl;
         }
 
-        return $this->client->request('POST', 
+        return $this->client->request('POST',
             $this->baseurl.'/v1_0/deposit', [
                 'headers' => $headers,
                 'body' => json_encode($payload)
@@ -54,17 +54,17 @@ class Client extends BaseClient
 
      /**
      * Deposit an amount from the owner’s account to a payee account.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
      * @param string $targetEnv
-     * @param array $payload
+     * @param mixed[] $payload
      * @param string $callbackUrl
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function depositV2(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv,
@@ -83,7 +83,7 @@ class Client extends BaseClient
             $headers['X-Callback-Url'] = $callbackUrl;
         }
 
-        return $this->client->request('POST', 
+        return $this->client->request('POST',
             $this->baseurl.'/v2_0/deposit', [
                 'headers' => $headers,
                 'body' => json_encode($payload)
@@ -92,8 +92,8 @@ class Client extends BaseClient
     }
 
     /**
-     * Get the status of a deposit. 
-     * 
+     * Get the status of a deposit.
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
@@ -101,13 +101,13 @@ class Client extends BaseClient
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getDepositStatus(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv
     ):ResponseInterface
     {
-        return $this->client->request('GET', 
+        return $this->client->request('GET',
             $this->baseurl.'/v1_0/deposit/'.$requestId, [
                 'headers' => [
                     'Authorization' => 'Bearer '.$token,
@@ -120,17 +120,17 @@ class Client extends BaseClient
 
     /**
      * Refund an amount from the owner’s account to a payee account.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
      * @param string $targetEnv
-     * @param array $payload
+     * @param mixed[] $payload
      * @param string $callbackUrl
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function refundV1(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv,
@@ -159,17 +159,17 @@ class Client extends BaseClient
 
     /**
      * Refund an amount from the owner’s account to a payee account.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
      * @param string $targetEnv
-     * @param array $payload
+     * @param mixed[] $payload
      * @param string $callbackUrl
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function refundV2(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv,
@@ -198,7 +198,7 @@ class Client extends BaseClient
 
     /**
      * Get the status of a refund.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
@@ -206,7 +206,7 @@ class Client extends BaseClient
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getRefundStatus(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv

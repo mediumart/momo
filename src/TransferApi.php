@@ -7,17 +7,17 @@ trait TransferApi
 {
     /**
      * Transfer an amount from the own account to a payee account.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
      * @param string $targetEnv
-     * @param array $payload
+     * @param mixed[] $payload
      * @param string $callbackUrl
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function transfer(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv,
@@ -46,7 +46,7 @@ trait TransferApi
 
     /**
      * Get the status of a transfer.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $requestId
      * @param string $token
@@ -54,7 +54,7 @@ trait TransferApi
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getTransferStatus(
-        string $subscriptionKey, 
+        string $subscriptionKey,
         string $requestId,
         string $token,
         string $targetEnv
