@@ -44,7 +44,7 @@ use Mediumart\MobileMoney\Sandbox\UsersProvisioning;
 $user = UsersProvisioning::sandboxUserFor('<your product subscription key>');
 ```
 
-This will return a fresh new `ApiUser` instance that is a value object with two properties: `id` and `apiKey`, that you can use to get a new access token for a product.
+This will return a fresh new `ApiUser` instance that is a value object with two properties: `id` and `apiKey`. Use to get a new access token for a product.
 
 ```php
 $id = $user->id;
