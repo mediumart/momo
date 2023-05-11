@@ -5,7 +5,7 @@ namespace Mediumart\MobileMoney\Sandbox;
  * @property-read string $id
  * @property-read string $apiKey
  */
-class ApiUser
+class SandboxUser
 {
     /**
      * Reference Id.

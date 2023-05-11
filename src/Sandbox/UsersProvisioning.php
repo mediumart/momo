@@ -9,9 +9,9 @@ class UsersProvisioning
      * Create a new sandbox user for a given product api.
      *
      * @param string $subscriptionKey
-     * @return ApiUser
+     * @return SandboxUser
      */
-    static public function sandboxUserFor(string $subscriptionKey):ApiUser
+    static public function sandboxUserFor(string $subscriptionKey): SandboxUser
     {
         Factory::httpClient()->createApiUser(
             $referenceId = Uuid::uuid4(), $subscriptionKey
@@ -24,6 +24,6 @@ class UsersProvisioning
         /** @var string[] */
         $data = json_decode($response, true);
 
-        return new ApiUser($referenceId, $data['apiKey']);
+        return new SandboxUser($referenceId, $data['apiKey']);
     }
 }

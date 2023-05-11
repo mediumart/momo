@@ -1,4 +1,4 @@
-# Mediumart momo
+# Mediumart momo (WIP)
 
 ![Build Status](https://github.com/mediumart/momo/actions/workflows/ci.yml/badge.svg)
 ![Phpstan](https://img.shields.io/badge/PHPStan-level%209-brightgreen.svg?style=flat)
