@@ -105,3 +105,9 @@ Then this is the list of methods you 'll have access to :
 -   `refundV1`
 -   `refundV2`
 -   `getRefundStatus`
+
+For now, to know which parameters are required for each method, **please look at the code** . A complete API docs will be released soon.
+
+## License
+
+Mediumart momo is an open-sourced software licensed under the [MIT license](https://github.com/mediumart/momo/blob/master/LICENSE.txt).
