@@ -5,11 +5,11 @@ namespace Mediumart\MobileMoney;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @method ResponseInterface createAccessToken()
- * @method ResponseInterface validateAccountHolderStatus()
- * @method ResponseInterface getAccountBalance()
- * @method ResponseInterface getBasicUserinfo()
- * @method ResponseInterface requestToPayDeliveryNotification()
+ * @method ResponseInterface createAccessToken(string $subscriptionKey, string $userReferenceId, string $apiKey)
+ * @method ResponseInterface validateAccountHolderStatus(string $accountHolderId,string $accountHolderIdType,string $subscriptionKey,string $targetEnv,string $token)
+ * @method ResponseInterface getAccountBalance(string $subscriptionKey, string $targetEnv, string $token)
+ * @method ResponseInterface getBasicUserinfo(string $msisdn, string $subscriptionKey, string $targetEnv, string $token)
+ * @method ResponseInterface requestToPayDeliveryNotification(string $message, string $subscriptionKey, string $requestId, string $targetEnv, string $token)
  */
 abstract class BaseClient
 {

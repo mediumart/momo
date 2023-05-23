@@ -1,6 +1,6 @@
 {
     "name": "mediumart/momo",
-    "description": "MTN Mobile money implementation",
+    "description": "MTN Mobile money php client",
     "type": "library",
     "keywords": [
         "MTN",
