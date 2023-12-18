@@ -45,21 +45,26 @@ use Mediumart\MobileMoney\Sandbox\UsersProvisioning;
 $user =  UsersProvisioning::sandboxUserFor('<your product subscription key>');
 ```
 
-This will return a fresh new `SandboxUser` instance, that is a value object with two properties: `id` and `apiKey`.
+This will get you a fresh `Mediumart\ModileMoney\User` instance, a value object with 3 properties (all lowercase):
 
 ```php
+
 $id = $user->id;
 
-$apikey = $user->apiKey;
+$apikey = $user->apikey;
+
+$subscriptionkey = $user->subscriptionkey;
 ```
 
-Use it to get a new access token for a service (`collection`, `disbursement`, or `remittance`).
+Use them to get a new access token for the corresponding service (`collection`, `disbursement`, or `remittance`).
 
 ```php
 $collection = MobileMoney::collection();
 
-$token = $collection->createAccessToken('<your_subscription_key>', $id, $apikey);
+$token = $collection->createAccessToken($subscriptionkey, $id, $apikey);
 ```
+
+The same `Mediumart\ModileMoney\User` class can be used to store similar values for your `live` environment.
 
 ## Usage
 
