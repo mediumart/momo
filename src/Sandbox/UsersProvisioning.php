@@ -2,28 +2,29 @@
 namespace Mediumart\MobileMoney\Sandbox;
 
 use Ramsey\Uuid\Uuid;
+use Mediumart\MobileMoney\User;
 
 class UsersProvisioning
 {
     /**
      * Create a new sandbox user for a given product api.
      *
-     * @param string $subscriptionKey
-     * @return SandboxUser
+     * @param string $subscriptionkey
+     * @return User
      */
-    static public function sandboxUserFor(string $subscriptionKey): SandboxUser
+    static public function sandboxUserFor(string $subscriptionkey): User
     {
         Factory::httpClient()->createApiUser(
-            $referenceId = Uuid::uuid4(), $subscriptionKey
+            $referenceId = Uuid::uuid4(), $subscriptionkey
         );
 
         $response = Factory::httpClient()
-                        ->createApiKey($referenceId, $subscriptionKey)
+                        ->createApiKey($referenceId, $subscriptionkey)
                         ->getBody();
 
         /** @var string[] */
         $data = json_decode($response, true);
 
-        return new SandboxUser($referenceId, $data['apiKey']);
+        return new User($referenceId, $data['apiKey'], $subscriptionkey);
     }
 }
