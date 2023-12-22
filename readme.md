@@ -1,4 +1,4 @@
-# Mediumart momo (WIP)
+# Mediumart momo
 
 ![Build Status](https://github.com/mediumart/momo/actions/workflows/ci.yml/badge.svg)
 
@@ -64,7 +64,7 @@ $collection = MobileMoney::collection();
 $token = $collection->createAccessToken($subscriptionkey, $id, $apikey);
 ```
 
-The same `Mediumart\ModileMoney\User` class can be used to store similar values for your `live` environment.
+The same `Mediumart\ModileMoney\User` class can be used to store similar values in your `live` environment.
 
 ## Usage
 
@@ -111,7 +111,7 @@ Then this is the list of methods you 'll have access to :
 -   `refundV2`
 -   `getRefundStatus`
 
-For now, to know which parameters are required for each method, **please look at the code** . A complete API docs will be released soon.
+For now, to know which parameters are required for each method, [**please look at the code**](https://github.com/mediumart/momo/tree/master/src) . A complete API docs may be released soon.
 
 ## License
 
