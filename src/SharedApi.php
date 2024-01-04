@@ -8,20 +8,20 @@ trait SharedApi
 {
     /**
      * Create an access token.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $userReferenceId
      * @param string $apiKey
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function createAccessToken(
-        string $subscriptionKey, 
-        string $userReferenceId, 
+        string $subscriptionKey,
+        string $userReferenceId,
         string $apiKey
     ):ResponseInterface
     {
-        return $this->client->request('POST', 
-            $this->baseurl.'/token/', 
+        return $this->client->request('POST',
+            $this->baseurl.'/token/',
             [
                 'headers' => [
                     'Authorization' => 'Basic '.\base64_encode($userReferenceId.':'.$apiKey),
@@ -33,13 +33,13 @@ trait SharedApi
 
     /**
      * Operation is used to check if an account holder is registered and active in the system.
-     * 
+     *
      * @param string $accountHolderId
-     * 
+     *
      * specifies the type of the party ID. Allowed values [msisdn, email, party_code].
      * accountHolderId should explicitly be in small letters.
-     * @param string $accountHolderIdType 
-     * 
+     * @param string $accountHolderIdType
+     *
      * @param string $subscriptionKey
      * @param string $targetEnv
      * @param string $token
@@ -53,7 +53,7 @@ trait SharedApi
         string $token
     ):ResponseInterface
     {
-        return $this->client->request('GET', 
+        return $this->client->request('GET',
             $this->baseurl.'/v1_0/accountholder/'.$accountHolderIdType.'/'.$accountHolderId.'/active',[
                 'headers' =>  [
                     'Authorization' => 'Bearer '.$token,
@@ -66,7 +66,7 @@ trait SharedApi
 
     /**
      * Get Account Balance.
-     * 
+     *
      * @param string $subscriptionKey
      * @param string $targetEnv
      * @param string $token
@@ -75,11 +75,14 @@ trait SharedApi
     public function getAccountBalance(
         string $subscriptionKey,
         string $targetEnv,
-        string $token
+        string $token,
+        string $currency = null
     ):ResponseInterface
     {
+        $path = $currency ? '/v1_0/account/balance/'.$currency : '/v1_0/account/balance';
+
         return $this->client->request('GET',
-            $this->baseurl.'/v1_0/account/balance',
+            $this->baseurl.$path,
             [
                 'headers' => [
                     'Authorization' => 'Bearer '.$token,
@@ -91,9 +94,9 @@ trait SharedApi
     }
 
     /**
-     * This operation returns personal information of the account holder. 
+     * This operation returns personal information of the account holder.
      * The operation does not need any consent by the account holder.
-     * 
+     *
      * @param string $msisdn
      * @param string $subscriptionKey
      * @param string $targetEnv
@@ -121,7 +124,7 @@ trait SharedApi
 
     /**
      * This operation is used to send additional Notification to an End User.
-     * 
+     *
      * @param string $message
      * @param string $subscriptionKey
      * @param string $requestId
@@ -141,7 +144,7 @@ trait SharedApi
             throw new Exception('Notification message should be 160 characters max');
         }
 
-        return $this->client->request('POST', 
+        return $this->client->request('POST',
             $this->baseurl.'/v1_0/requesttopay/'.$requestId.'/deliverynotification',[
                 'headers' => [
                     'Authorization' => 'Bearer '.$token,
@@ -151,6 +154,68 @@ trait SharedApi
                     'Ocp-Apim-Subscription-Key' => $subscriptionKey
                 ],
                 'body' => json_encode(['notificationMessage' => $message])
+            ]
+        );
+    }
+
+    /**
+     * This operation is used to claim a consent by the account holder for the requested scopes.
+     *
+     * @param string $token
+     * @param string $targetEnv
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function createOauth2Token(string $token, string $targetEnv)
+    {
+        return $this->client->request('POST', $this->baseurl.'/oauth2/token/', [
+            'headers' => [
+                'Authorization' => 'Bearer '.$token,
+                'X-Target-Environment' => $targetEnv
+            ]
+        ]);
+    }
+
+    /**
+     * This operation is used to claim a consent by the account holder for the requested scopes.
+     *
+     * @param string $token
+     * @param string $targetEnv
+     * @param string|null $callbackUrl
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function bcAuthorize(string $token, string $targetEnv, string $callbackUrl = null)
+    {
+        $headers = [
+            'Authorization' => 'Bearer '.$token,
+            'X-Target-Environment' => $targetEnv
+        ];
+
+        if (! empty($callbackUrl)) {
+            $headers['X-Callback-Url'] = $callbackUrl;
+        }
+
+        return $this->client->request('POST',
+            $this->baseurl.'/v1_0/bc-authorize', [
+                'headers' => $headers
+            ]
+        );
+    }
+
+    /**
+     * This operation is used to claim a consent by the account holder for the requested scopes.
+     *
+     * @param string $token
+     * @param string $targetEnv
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getUserInfoWithConsent(string $token, string $targetEnv)
+    {
+        return $this->client->request('GET',
+            $this->baseurl.'/oauth2/v1_0/userinfo', [
+                'headers' => [
+                    'Authorization' => 'Bearer '.$token,
+                    'X-Target-Environment' => $targetEnv
+                ]
             ]
         );
     }

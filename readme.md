@@ -83,10 +83,13 @@ Then this is the list of methods you 'll have access to :
 
 #### shared Api (`collection`, `disbursement`, and `remittance`)
 
+-   `bcAuthorize`
 -   `createAccessToken`
+-   `createOauth2Token`
 -   `validateAccountHolderStatus`
 -   `getAccountBalance`
 -   `getBasicUserinfo`
+-   `getUserInfoWithConsent`
 -   `requestToPayDeliveryNotification`
 
 #### transferApi (`disbursement`, `remittance`)
@@ -101,6 +104,13 @@ Then this is the list of methods you 'll have access to :
 -   `requestToWithdrawV1`
 -   `requestToWithdrawV2`
 -   `requestToWithdrawV1TransactionStatus`
+-   `cancelInvoice`
+-   `createInvoice`
+-   `getInvoiceStatus`
+-   `createPayments`
+-   `getPaymentStatus`
+-   `preApproval`
+-   `getPreApprovalStatus`
 
 #### disbursement
 
@@ -110,6 +120,11 @@ Then this is the list of methods you 'll have access to :
 -   `refundV1`
 -   `refundV2`
 -   `getRefundStatus`
+
+#### remittance
+
+-   `cashTransfer`
+-   `getCashTransferStatus`
 
 For now, to know which parameters are required for each method, [**please look at the code**](https://github.com/mediumart/momo/tree/master/src) . A complete API docs may be released soon.
 
