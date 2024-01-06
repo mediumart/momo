@@ -59,7 +59,7 @@ trait Factory
                 . "Supported services for Mtn Mobile Money are: "
                 . "collection, disbursement, and remittance.";
 
-            throw new \Exception($msg);
+            throw new \BadMethodCallException($msg);
         }
 
         $env = isset($arguments[0])
