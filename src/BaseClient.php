@@ -1,5 +1,4 @@
 <?php
-
 namespace Mediumart\MobileMoney;
 
 use Psr\Http\Message\ResponseInterface;
@@ -10,10 +9,16 @@ use Psr\Http\Message\ResponseInterface;
  * @method ResponseInterface getAccountBalance(string $subscriptionKey, string $targetEnv, string $token)
  * @method ResponseInterface getBasicUserinfo(string $msisdn, string $subscriptionKey, string $targetEnv, string $token)
  * @method ResponseInterface requestToPayDeliveryNotification(string $message, string $subscriptionKey, string $requestId, string $targetEnv, string $token)
+ * @method ResponseInterface createOauth2Token(string $token, string $targetEnv)
+ * @method ResponseInterface bcAuthorize(string $token, string $targetEnv, string $callbackUrl = null)
+ * @method ResponseInterface getUserInfoWithConsent(string $token, string $targetEnv)
+ * @property-read string $id
+ * @property-read string $apikey
+ * @property-read string $subscriptionkey
  */
 abstract class BaseClient
 {
-    use SharedApi;
+    use SharedApi, HasUserData;
 
     /**
      * The base url of all the api endpoints.
