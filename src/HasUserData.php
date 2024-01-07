@@ -21,20 +21,30 @@ trait HasUserData
         'subscriptionkey',
     ];
 
+    public function setUserData(User $user)
+    {
+        foreach ($this->_keys as $key) {
+            if (!isset($user->$key)) {
+                throw new \InvalidArgumentException("Missing required user data: {$key}");
+            }
+            $this->_data[$key] = $user->$key;
+        }
+    }
+
      /**
      * Set data.
      *
-     * @param string $name
+     * @param string $key
      * @param string $value
      * @return void
      */
-    public function __set(string $name, string $value) { if (\in_array($name, $this->_keys)) $this->_data[$name] = $value; }
+    public function __set(string $key, string $value) { if (\in_array($key, $this->_keys)) $this->_data[$key] = $value; }
 
     /**
      * Get data.
      *
-     * @param string $name
+     * @param string $key
      * @return mixed
      */
-   public function __get(string $name) { return \array_key_exists($name, $this->_data) ? $this->_data[$name] : null; }
+   public function __get(string $key) { return \array_key_exists($key, $this->_data) ? $this->_data[$key] : null; }
 }

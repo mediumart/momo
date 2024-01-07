@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
  * @method ResponseInterface createOauth2Token(string $token, string $targetEnv)
  * @method ResponseInterface bcAuthorize(string $token, string $targetEnv, string $callbackUrl = null)
  * @method ResponseInterface getUserInfoWithConsent(string $token, string $targetEnv)
- * @property-read string $id
+ * @property-read string $userid
  * @property-read string $apikey
  * @property-read string $subscriptionkey
  */
