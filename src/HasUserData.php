@@ -6,7 +6,7 @@ trait HasUserData
     /**
      * User Data.
      *
-     * @var array
+     * @var string[]
      */
     protected $_data = [];
 
@@ -21,7 +21,13 @@ trait HasUserData
         'subscriptionkey',
     ];
 
-    public function setUserData(User $user)
+    /**
+     * Set user data.
+     *
+     * @param User $user
+     * @return static
+     */
+    public function withUserData(User $user)
     {
         foreach ($this->_keys as $key) {
             if (!isset($user->$key)) {
@@ -29,6 +35,8 @@ trait HasUserData
             }
             $this->_data[$key] = $user->$key;
         }
+
+        return $this;
     }
 
      /**

@@ -20,7 +20,7 @@ class Client extends BaseClient
      * @param string $cashTransferId
      * @param string $token
      * @param string $targetEnv
-     * @param array $payload
+     * @param mixed[] $payload
      * @param string|null $callbackUrl
      * @return ResponseInterface
      */
