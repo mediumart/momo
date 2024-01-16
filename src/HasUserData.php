@@ -27,7 +27,7 @@ trait HasUserData
      * @param User $user
      * @return static
      */
-    public function withUserData(User $user)
+    public function withUser(User $user)
     {
         foreach ($this->_keys as $key) {
             if (!isset($user->$key)) {
