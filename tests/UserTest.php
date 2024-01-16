@@ -14,7 +14,7 @@ class UserTest extends TestCase
 
         $user = new User($id, $apikey, $subscriptionkey);
 
-        $this->assertSame($id, $user->id);
+        $this->assertSame($id, $user->userid);
         $this->assertSame($apikey, $user->apikey);
         $this->assertSame($subscriptionkey, $user->subscriptionkey);
     }
